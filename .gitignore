@@ -132,14 +132,5 @@ Assets/Indie2D.meta
 Assets/ImportedResources/StarterAssets/
 Assets/ImportedResources/StarterAssets.meta
 
-# Unity Terrain Demo Scene assets (3.9 GB, re-importable package)
-Assets/SelfTryVFX/DSScannerDemoScene_URP/Terrain/
-Assets/SelfTryVFX/DSScannerDemoScene_URP/Terrain.meta
-Assets/SelfTryVFX/DSScannerDemoScene_URP/Prefabs/
-Assets/SelfTryVFX/DSScannerDemoScene_URP/Prefabs.meta
-
-# IceTool GitHub download (inside CRTTVEffect)
-Assets/SelfTryVFX/CRTTVEffect/IceTool-main/
-Assets/SelfTryVFX/CRTTVEffect/IceTool-main.meta
-Assets/SelfTryVFX/CRTTVEffect/IceTool-main.zip
-Assets/SelfTryVFX/CRTTVEffect/IceTool-main.zip.meta
+# CLAUDE.md
+CLAUDE.md
