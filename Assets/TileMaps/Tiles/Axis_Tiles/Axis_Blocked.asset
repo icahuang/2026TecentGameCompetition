@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axis_Blocked
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: c09667749073b764895c28c3b77207f9, type: 3}
-  m_Color: {r: 0.18, g: 0.16, b: 0.16, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
