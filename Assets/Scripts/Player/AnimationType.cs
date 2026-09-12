@@ -3,6 +3,21 @@ using UnityEngine;
 /// <summary>网格轴方向，不是屏幕方向。顺时针：N → E → S → W。</summary>
 public enum Dir { N, E, S, W }
 
+public static class DirExtensions
+{
+    public static Vector2Int ToDelta(this Dir dir)
+    {
+        switch (dir)
+        {
+            case Dir.N: return new Vector2Int(1, 0);
+            case Dir.E: return new Vector2Int(0, -1);
+            case Dir.S: return new Vector2Int(-1, 0);
+            case Dir.W: return new Vector2Int(0, 1);
+            default: return Vector2Int.zero;
+        }
+    }
+}
+
 /// <summary>Animator 状态前缀，实际播放 <c>{act}_{dir}</c>。</summary>
 public enum Act { idle, run }
 
@@ -16,8 +31,8 @@ public class AnimationType
     }
     public void SetAnimationType(Act act, Dir dir)
     {
-        _dir = dir;
         _act = act;
+        _dir = dir;
     }
     public Dir GetDir()
     {

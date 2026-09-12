@@ -1,61 +1,73 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
-/// <summary>读四向输入，交给 <see cref="GridManager"/>。不持有地图。</summary>
-
+/// <summary>读四向输入，经 <see cref="GridActor"/> 走一步。不持有地图。</summary>
 [RequireComponent(typeof(PlayerRenderer))]
+[RequireComponent(typeof(GridActor))]
 public class PlayerController : MonoBehaviour
 {
-    // GridManager判断是否可以移动
-    // private GridManager _gridManager;
-    // PlayerRenderer播放动画
-    private PlayerRenderer _playerRenderer;
-    // AnimationType播放动画
-    private AnimationType _animationType;
+    [SerializeField] private float _stepDuration = 1f;
 
-    // 判断是否可以移动
-    private bool _nextCellCanGo = false;
-    private bool _isRunning = false;
-    public float _runDuration = 1f;
+    private PlayerRenderer _playerRenderer;
+    private GridActor _actor;
+    private AnimationType _animationType;
+    private bool _busy;
+
     private void Awake()
     {
-        // if (_gridManager == null)
-        // {
-        //     Debug.LogError("PlayerController: GridManager 未赋值！");
-        // }
         _playerRenderer = GetComponent<PlayerRenderer>();
+        _actor = GetComponent<GridActor>();
         _animationType = new AnimationType();
     }
 
     private void Update()
     {
-        if (_isRunning) return;
+        if (_busy) return;
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-    
+        Dir dir;
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        if (h != 0f)
+            dir = h > 0f ? Dir.E : Dir.W;
+        else if (v != 0f)
+            dir = v > 0f ? Dir.N : Dir.S;
+        else
+            return;
 
-        if (horizontalInput != 0)
+        if (!_actor.TryStep(dir.ToDelta()))
         {
-            _animationType.SetAnimationType(Act.run, horizontalInput > 0 ? Dir.E : Dir.W);
-            _isRunning = true;
-            StartCoroutine(Run());
+            _animationType.SetAnimationType(Act.idle, dir);
+            _playerRenderer.Play(_animationType);
+            return;
         }
-        else if (verticalInput != 0)
-        {
-            _animationType.SetAnimationType(Act.run, verticalInput > 0 ? Dir.N : Dir.S);
-            _isRunning = true;
-            StartCoroutine(Run());
-            // 加入移动逻辑
-        }
+
+        _busy = true;
+        _animationType.SetAnimationType(Act.run, dir);
+        StartCoroutine(Step());
     }
 
-    IEnumerator Run()
+    private IEnumerator Step()
     {
+        Vector3 from = transform.position;
+        Vector3 to = _actor.WorldPosition;
+        to.z = from.z;
+
         _playerRenderer.Play(_animationType);
-        yield return new WaitForSeconds(_runDuration);
-        _isRunning = false;
+
+        float elapsed = 0f;
+        while (elapsed < _stepDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / _stepDuration);
+            Vector3 p = Vector3.Lerp(from, to, t);
+            p.z = from.z;
+            transform.position = p;
+            yield return null;
+        }
+
+        transform.position = to;
         _animationType.SetAnimationType(Act.idle, _animationType.GetDir());
         _playerRenderer.Play(_animationType);
+        _busy = false;
     }
 }
