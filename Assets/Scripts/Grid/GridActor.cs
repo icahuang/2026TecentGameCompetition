@@ -15,7 +15,7 @@ public class GridActor : MonoBehaviour
     private void Start()
     {
         if (_manager == null)
-            _manager = FindObjectOfType<GridManager>();
+            _manager = GetComponentInParent<GridManager>();
 
         if (_manager == null)
         {

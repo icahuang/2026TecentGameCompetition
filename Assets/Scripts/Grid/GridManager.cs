@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
 
     private readonly HashSet<Vector2Int> _floor = new HashSet<Vector2Int>();
     private readonly Dictionary<Vector2Int, GridActor> _occupants = new Dictionary<Vector2Int, GridActor>();
+    private readonly Dictionary<Vector2Int, MovementAxis> _axes = new Dictionary<Vector2Int, MovementAxis>();
 
     public Grid Grid => _grid;
 
@@ -26,6 +27,7 @@ public class GridManager : MonoBehaviour
     public void Bake()
     {
         _floor.Clear();
+        _axes.Clear();
         if (_floorTilemap == null)
         {
             Debug.LogError($"{name}: 未指定 Floor Tilemap。", this);
@@ -34,7 +36,13 @@ public class GridManager : MonoBehaviour
 
         foreach (Vector3Int p in _floorTilemap.cellBounds.allPositionsWithin)
         {
-            if (_floorTilemap.HasTile(p)) _floor.Add((Vector2Int)p);
+            if (!_floorTilemap.HasTile(p)) continue;
+
+            Vector2Int cell = (Vector2Int)p;
+            _floor.Add(cell);
+
+            AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
+            _axes[cell] = axisTile != null ? axisTile.Axis : MovementAxis.Free;
         }
     }
 
@@ -46,6 +54,12 @@ public class GridManager : MonoBehaviour
         _occupants.TryGetValue(cell, out GridActor actor) ? actor : null;
 
     public bool CanWalk(Vector2Int cell) => _floor.Contains(cell) && !_occupants.ContainsKey(cell);
+
+    public bool AllowsStep(Vector2Int from, Vector2Int to)
+    {
+        Vector2Int delta = to - from;
+        return AllowsAxis(from, delta) && AllowsAxis(to, delta);
+    }
 
     public bool TryPlace(GridActor actor, Vector2Int cell)
     {
@@ -59,7 +73,7 @@ public class GridManager : MonoBehaviour
     {
         if (actor == null) return false;
         if (to == actor.Cell) return true;
-        if (!CanWalk(to)) return false;
+        if (!CanWalk(to) || !AllowsStep(actor.Cell, to)) return false;
 
         Unregister(actor);
         _occupants[to] = actor;
@@ -78,16 +92,36 @@ public class GridManager : MonoBehaviour
             _occupants.Remove(actor.Cell);
     }
 
+    private bool AllowsAxis(Vector2Int cell, Vector2Int delta)
+    {
+        if (!_axes.TryGetValue(cell, out MovementAxis axis) || axis == MovementAxis.Free)
+            return true;
+        if (axis == MovementAxis.NorthSouth)
+            return delta == Dir.N.ToDelta() || delta == Dir.S.ToDelta();
+        if (axis == MovementAxis.EastWest)
+            return delta == Dir.E.ToDelta() || delta == Dir.W.ToDelta();
+        return true;
+    }
+
     private void OnDrawGizmosSelected()
     {
-        if (_grid == null) _grid = GetComponentInParent<Grid>();
+        if (_grid == null) _grid = GetComponent<Grid>() ?? GetComponentInParent<Grid>();
         if (_grid == null || _floorTilemap == null) return;
 
-        Gizmos.color = new Color(0.2f, 0.9f, 0.4f, 0.6f);
         foreach (Vector3Int p in _floorTilemap.cellBounds.allPositionsWithin)
         {
-            if (_floorTilemap.HasTile(p))
-                Gizmos.DrawWireCube(_grid.GetCellCenterWorld(p), _grid.cellSize);
+            if (!_floorTilemap.HasTile(p)) continue;
+
+            AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
+            MovementAxis axis = axisTile != null ? axisTile.Axis : MovementAxis.Free;
+            if (axis == MovementAxis.NorthSouth)
+                Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.7f);
+            else if (axis == MovementAxis.EastWest)
+                Gizmos.color = new Color(1f, 0.45f, 0.2f, 0.7f);
+            else
+                Gizmos.color = new Color(0.2f, 0.9f, 0.4f, 0.6f);
+
+            Gizmos.DrawWireCube(_grid.GetCellCenterWorld(p), _grid.cellSize);
         }
     }
 }
