@@ -53,7 +53,10 @@ public class GridManager : MonoBehaviour
     public GridActor OccupantAt(Vector2Int cell) =>
         _occupants.TryGetValue(cell, out GridActor actor) ? actor : null;
 
-    public bool CanWalk(Vector2Int cell) => _floor.Contains(cell) && !_occupants.ContainsKey(cell);
+    public bool CanWalk(Vector2Int cell) =>
+        _floor.Contains(cell)
+        && !_occupants.ContainsKey(cell)
+        && IsPassable(cell);
 
     public bool AllowsStep(Vector2Int from, Vector2Int to)
     {
@@ -91,6 +94,11 @@ public class GridManager : MonoBehaviour
     {
         if (_occupants.TryGetValue(actor.Cell, out GridActor current) && current == actor)
             _occupants.Remove(actor.Cell);
+    }
+
+    private bool IsPassable(Vector2Int cell)
+    {
+        return !_links.TryGetValue(cell, out MovementLinks links) || links != MovementLinks.None;
     }
 
     private bool AllowsLeave(Vector2Int cell, Dir dir)
