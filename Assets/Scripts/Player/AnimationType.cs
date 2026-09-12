@@ -16,6 +16,42 @@ public static class DirExtensions
             default: return Vector2Int.zero;
         }
     }
+
+    public static Dir Opposite(this Dir dir)
+    {
+        switch (dir)
+        {
+            case Dir.N: return Dir.S;
+            case Dir.E: return Dir.W;
+            case Dir.S: return Dir.N;
+            case Dir.W: return Dir.E;
+            default: return dir;
+        }
+    }
+
+    public static MovementLinks ToLink(this Dir dir)
+    {
+        switch (dir)
+        {
+            case Dir.N: return MovementLinks.N;
+            case Dir.E: return MovementLinks.E;
+            case Dir.S: return MovementLinks.S;
+            case Dir.W: return MovementLinks.W;
+            default: return MovementLinks.None;
+        }
+    }
+
+    public static bool TryFromDelta(Vector2Int delta, out Dir dir)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            dir = (Dir)i;
+            if (dir.ToDelta() == delta) return true;
+        }
+
+        dir = Dir.N;
+        return false;
+    }
 }
 
 /// <summary>Animator 状态前缀，实际播放 <c>{act}_{dir}</c>。</summary>

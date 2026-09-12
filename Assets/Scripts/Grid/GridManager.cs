@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
 
     private readonly HashSet<Vector2Int> _floor = new HashSet<Vector2Int>();
     private readonly Dictionary<Vector2Int, GridActor> _occupants = new Dictionary<Vector2Int, GridActor>();
-    private readonly Dictionary<Vector2Int, MovementAxis> _axes = new Dictionary<Vector2Int, MovementAxis>();
+    private readonly Dictionary<Vector2Int, MovementLinks> _links = new Dictionary<Vector2Int, MovementLinks>();
 
     public Grid Grid => _grid;
 
@@ -27,7 +27,7 @@ public class GridManager : MonoBehaviour
     public void Bake()
     {
         _floor.Clear();
-        _axes.Clear();
+        _links.Clear();
         if (_floorTilemap == null)
         {
             Debug.LogError($"{name}: 未指定 Floor Tilemap。", this);
@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour
             _floor.Add(cell);
 
             AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
-            _axes[cell] = axisTile != null ? axisTile.Axis : MovementAxis.Free;
+            _links[cell] = axisTile != null ? axisTile.Links : MovementLinks.All;
         }
     }
 
@@ -58,7 +58,8 @@ public class GridManager : MonoBehaviour
     public bool AllowsStep(Vector2Int from, Vector2Int to)
     {
         Vector2Int delta = to - from;
-        return AllowsAxis(from, delta) && AllowsAxis(to, delta);
+        if (!DirExtensions.TryFromDelta(delta, out Dir dir)) return false;
+        return AllowsLeave(from, dir) && AllowsEnter(to, dir);
     }
 
     public bool TryPlace(GridActor actor, Vector2Int cell)
@@ -92,15 +93,18 @@ public class GridManager : MonoBehaviour
             _occupants.Remove(actor.Cell);
     }
 
-    private bool AllowsAxis(Vector2Int cell, Vector2Int delta)
+    private bool AllowsLeave(Vector2Int cell, Dir dir)
     {
-        if (!_axes.TryGetValue(cell, out MovementAxis axis) || axis == MovementAxis.Free)
+        if (!_links.TryGetValue(cell, out MovementLinks links) || links == MovementLinks.All)
             return true;
-        if (axis == MovementAxis.NorthSouth)
-            return delta == Dir.N.ToDelta() || delta == Dir.S.ToDelta();
-        if (axis == MovementAxis.EastWest)
-            return delta == Dir.E.ToDelta() || delta == Dir.W.ToDelta();
-        return true;
+        return (links & dir.ToLink()) != 0;
+    }
+
+    private bool AllowsEnter(Vector2Int cell, Dir dir)
+    {
+        if (!_links.TryGetValue(cell, out MovementLinks links) || links == MovementLinks.All)
+            return true;
+        return (links & dir.Opposite().ToLink()) != 0;
     }
 
     private void OnDrawGizmosSelected()
@@ -113,14 +117,9 @@ public class GridManager : MonoBehaviour
             if (!_floorTilemap.HasTile(p)) continue;
 
             AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
-            MovementAxis axis = axisTile != null ? axisTile.Axis : MovementAxis.Free;
-            if (axis == MovementAxis.NorthSouth)
-                Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.7f);
-            else if (axis == MovementAxis.EastWest)
-                Gizmos.color = new Color(1f, 0.45f, 0.2f, 0.7f);
-            else
-                Gizmos.color = new Color(0.2f, 0.9f, 0.4f, 0.6f);
-
+            Color c = axisTile != null ? axisTile.color : new Color(0.2f, 0.9f, 0.4f, 1f);
+            c.a = 0.75f;
+            Gizmos.color = c;
             Gizmos.DrawWireCube(_grid.GetCellCenterWorld(p), _grid.cellSize);
         }
     }

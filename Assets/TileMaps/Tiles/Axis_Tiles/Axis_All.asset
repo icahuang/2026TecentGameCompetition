@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e4c1a8b2d9f4e6a9c3b5d7e1f0a2b4c, type: 3}
-  m_Name: Axis_EW
+  m_Name: Axis_All
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 8d3ab5cc03eae5848922b11f696c351d, type: 3}
-  m_Color: {r: 1, g: 0.55, b: 0.3, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  _links: 10
+  _links: -1
