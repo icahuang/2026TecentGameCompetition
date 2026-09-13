@@ -115,6 +115,10 @@ public class GridManager : MonoBehaviour
         return (links & dir.Opposite().ToLink()) != 0;
     }
 
+    /// <summary>
+    /// 编辑器里选中本物体时，在地板 Tilemap 每个有 Tile 的格子上画线框立方体，
+    /// 方便看清可行走区域；有 AxisTile 时用其颜色，否则用默认绿色。
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         if (_grid == null) _grid = GetComponent<Grid>() ?? GetComponentInParent<Grid>();

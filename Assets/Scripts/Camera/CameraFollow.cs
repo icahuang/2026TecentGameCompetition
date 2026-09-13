@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform _target;
+    [SerializeField]private Transform _target;
 
     [Tooltip("角色落在屏幕上的位置。左下为 (0,0)，右上为 (1,1)。")]
     [SerializeField] private Vector2 _viewportAnchor = new Vector2(0.22f, 0.22f);
@@ -25,12 +25,6 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        if (_target == null)
-        {
-            PlayerController player = FindObjectOfType<PlayerController>();
-            if (player != null) _target = player.transform;
-        }
-
         if (_target == null)
         {
             Debug.LogError($"{name}: 未指定跟随目标。", this);
