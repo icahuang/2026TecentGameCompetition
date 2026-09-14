@@ -50,7 +50,7 @@ public class EnemyController : ActorController
                 return;
             }
 
-            if (!world.CanWalk(dest) || !world.AllowsStep(from, dest)) continue;
+            if (!world.CanWalk(dest)) continue;
 
             int dist = Manhattan(dest, player.Cell);
             if (dist >= currentDist) continue;
@@ -73,7 +73,7 @@ public class EnemyController : ActorController
         {
             Dir dir = (Dir)i;
             Vector2Int dest = from + dir.ToDelta();
-            if (world.CanWalk(dest) && world.AllowsStep(from, dest))
+            if (world.CanWalk(dest))
                 options.Add(dir);
         }
 

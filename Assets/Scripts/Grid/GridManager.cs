@@ -10,9 +10,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Grid _grid;
     [SerializeField] private Tilemap _floorTilemap;
 
-    private readonly HashSet<Vector2Int> _floor = new HashSet<Vector2Int>();
     private readonly Dictionary<Vector2Int, GridActor> _occupants = new Dictionary<Vector2Int, GridActor>();
-    private readonly Dictionary<Vector2Int, MovementLinks> _links = new Dictionary<Vector2Int, MovementLinks>();
 
     public Grid Grid => _grid;
 
@@ -21,29 +19,8 @@ public class GridManager : MonoBehaviour
         if (_grid == null) {
             _grid = GetComponent<Grid>() ?? GetComponentInParent<Grid>();
         }
-        Bake();
-    }
-
-    public void Bake()
-    {
-        _floor.Clear();
-        _links.Clear();
         if (_floorTilemap == null)
-        {
             Debug.LogError($"{name}: 未指定 Floor Tilemap。", this);
-            return;
-        }
-
-        foreach (Vector3Int p in _floorTilemap.cellBounds.allPositionsWithin)
-        {
-            if (!_floorTilemap.HasTile(p)) continue;
-
-            Vector2Int cell = (Vector2Int)p;
-            _floor.Add(cell);
-
-            AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
-            _links[cell] = axisTile != null ? axisTile.Links : MovementLinks.All;
-        }
     }
 
     public Vector3 ToWorld(Vector2Int cell) => _grid.GetCellCenterWorld((Vector3Int)cell);
@@ -53,24 +30,18 @@ public class GridManager : MonoBehaviour
     public GridActor OccupantAt(Vector2Int cell) =>
         _occupants.TryGetValue(cell, out GridActor actor) ? actor : null;
 
-    public bool CanWalk(Vector2Int cell) =>
-        _floor.Contains(cell)
-        && !_occupants.ContainsKey(cell)
-        && IsPassable(cell);
-
-    /// <summary>地板上且非 Blocked。视线穿过时忽略单位占用。</summary>
+    /// <summary>地板上、且那块砖是能站的。视线穿过时忽略单位占用。</summary>
     public bool IsPassable(Vector2Int cell)
     {
-        if (!_floor.Contains(cell)) return false;
-        return !_links.TryGetValue(cell, out MovementLinks links) || links != MovementLinks.None;
+        if (_floorTilemap == null) return false;
+        TileBase tile = _floorTilemap.GetTile((Vector3Int)cell);
+        if (tile == null) return false;
+        return !(tile is AxisTile axisTile) || axisTile.Walkable;
     }
 
-    public bool AllowsStep(Vector2Int from, Vector2Int to)
-    {
-        Vector2Int delta = to - from;
-        if (!DirExtensions.TryFromDelta(delta, out Dir dir)) return false;
-        return AllowsLeave(from, dir) && AllowsEnter(to, dir);
-    }
+    public bool CanWalk(Vector2Int cell) =>
+        IsPassable(cell)
+        && !_occupants.ContainsKey(cell);
 
     public bool TryPlace(GridActor actor, Vector2Int cell)
     {
@@ -84,7 +55,7 @@ public class GridManager : MonoBehaviour
     {
         if (actor == null) return false;
         if (to == actor.Cell) return true;
-        if (!CanWalk(to) || !AllowsStep(actor.Cell, to)) return false;
+        if (!CanWalk(to)) return false;
 
         Unregister(actor);
         _occupants[to] = actor;
@@ -103,37 +74,19 @@ public class GridManager : MonoBehaviour
             _occupants.Remove(actor.Cell);
     }
 
-    private bool AllowsLeave(Vector2Int cell, Dir dir)
-    {
-        if (!_links.TryGetValue(cell, out MovementLinks links) || links == MovementLinks.All)
-            return true;
-        return (links & dir.ToLink()) != 0;
-    }
-
-    private bool AllowsEnter(Vector2Int cell, Dir dir)
-    {
-        if (!_links.TryGetValue(cell, out MovementLinks links) || links == MovementLinks.All)
-            return true;
-        return (links & dir.Opposite().ToLink()) != 0;
-    }
-
     /// <summary>
-    /// 编辑器里选中本物体时，在地板 Tilemap 每个有 Tile 的格子上画线框立方体，
-    /// 方便看清可行走区域；有 AxisTile 时用其颜色，否则用默认绿色。
+    /// 编辑器里选中本物体时，在能站的格子上画线框立方体，方便看清可行走区域。
+    /// 直接问 Tilemap，所以改了地图立刻就能看到。
     /// </summary>
     private void OnDrawGizmosSelected()
     {
         if (_grid == null) _grid = GetComponent<Grid>() ?? GetComponentInParent<Grid>();
         if (_grid == null || _floorTilemap == null) return;
 
+        Gizmos.color = new Color(0.2f, 0.9f, 0.4f, 0.75f);
         foreach (Vector3Int p in _floorTilemap.cellBounds.allPositionsWithin)
         {
-            if (!_floorTilemap.HasTile(p)) continue;
-
-            AxisTile axisTile = _floorTilemap.GetTile<AxisTile>(p);
-            Color c = axisTile != null ? axisTile.color : new Color(0.2f, 0.9f, 0.4f, 1f);
-            c.a = 0.75f;
-            Gizmos.color = c;
+            if (!IsPassable((Vector2Int)p)) continue;
             Gizmos.DrawWireCube(_grid.GetCellCenterWorld(p), _grid.cellSize);
         }
     }

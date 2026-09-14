@@ -29,18 +29,6 @@ public static class DirExtensions
         }
     }
 
-    public static MovementLinks ToLink(this Dir dir)
-    {
-        switch (dir)
-        {
-            case Dir.N: return MovementLinks.N;
-            case Dir.E: return MovementLinks.E;
-            case Dir.S: return MovementLinks.S;
-            case Dir.W: return MovementLinks.W;
-            default: return MovementLinks.None;
-        }
-    }
-
     public static bool TryFromDelta(Vector2Int delta, out Dir dir)
     {
         for (int i = 0; i < 4; i++)
