@@ -9,7 +9,7 @@ public abstract class ActorController : MonoBehaviour
     protected ActorRenderer Renderer { get; private set; }
     protected GridActor Actor { get; private set; }
     protected AnimationType Animation { get; private set; }
-    protected Dir LastDir { get; set; } = Dir.S;
+    protected Dir LastDir { get; set; } = Dir.N;
     protected bool Busy { get; set; }
 
     protected virtual void Awake()
@@ -19,7 +19,7 @@ public abstract class ActorController : MonoBehaviour
         Animation = new AnimationType();
     }
 
-    protected void Face(Dir dir)
+    protected void UpdateFace(Dir dir)
     {
         LastDir = dir;
         Animation.SetAnimationType(Act.idle, dir);
@@ -28,7 +28,7 @@ public abstract class ActorController : MonoBehaviour
 
     protected bool TryWalk(Dir dir)
     {
-        Face(dir);
+        UpdateFace(dir);
         if (!Actor.TryStep(dir.ToDelta())) return false;
         PlayRunAndStep(dir);
         return true;

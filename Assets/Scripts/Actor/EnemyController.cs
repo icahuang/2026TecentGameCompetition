@@ -45,7 +45,7 @@ public class EnemyController : ActorController
             Vector2Int dest = from + dir.ToDelta();
             if (world.OccupantAt(dest) == player)
             {
-                Face(dir);
+                UpdateFace(dir);
                 if (_turnManager != null) _turnManager.CatchPlayer(player);
                 return;
             }

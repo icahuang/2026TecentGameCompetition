@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
     {
         if (_caught) return;
         _caught = true;
-        Debug.Log("敌人抓住了玩家。");
+        Debug.Log("游戏失败：被敌人抓住了。");
         if (player != null)
         {
             PlayerController controller = player.GetComponent<PlayerController>();

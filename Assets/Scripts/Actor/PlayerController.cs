@@ -29,7 +29,7 @@ public class PlayerController : ActorController
 
         if (!Actor.TryStep(dir.ToDelta()))
         {
-            Face(dir);
+            UpdateFace(dir);
             return;
         }
 
