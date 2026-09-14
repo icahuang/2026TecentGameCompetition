@@ -101,28 +101,28 @@ public class EnemyController : ActorController
         switch (LastDir)
         {
             case Dir.N:
-                if (delta.x > 0 && Mathf.Abs(delta.x) <= 2) 
+                if (delta.x > 0 && Mathf.Abs(delta.x) <= _detectRange) 
                 {
                     Debug.Log("See u~");
                     _isSpottedPlayer = true;
                 }
                 break;
             case Dir.S:
-                if (delta.x < 0 && Mathf.Abs(delta.x) <= 2)
+                if (delta.x < 0 && Mathf.Abs(delta.x) <= _detectRange)
                 {
                     Debug.Log("See u~");
                     _isSpottedPlayer = true;
                 }
                 break;
             case Dir.W:
-                if (delta.y > 0 && Mathf.Abs(delta.y) <= 2)
+                if (delta.y > 0 && Mathf.Abs(delta.y) <= _detectRange)
                 {
                     Debug.Log("See u~");
                     _isSpottedPlayer = true;
                 }
                 break;
             case Dir.E:
-                if (delta.y < 0 && Mathf.Abs(delta.y) <= 2)
+                if (delta.y < 0 && Mathf.Abs(delta.y) <= _detectRange)
                 {
                     Debug.Log("See u~");
                     _isSpottedPlayer = true;
