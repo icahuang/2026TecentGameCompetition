@@ -1,13 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// 占一格的单位。逻辑位置只有 <see cref="Cell"/>；画面插值由上层负责。
+/// 占一格的单位。
+/// 
 /// </summary>
 public class GridActor : MonoBehaviour
 {
     [SerializeField] private GridManager _manager;
 
     public Vector2Int Cell { get; private set; }
+
+    public GridManager Manager => _manager;
 
     public Vector3 WorldPosition =>
         _manager != null ? _manager.ToWorld(Cell) : transform.position;
@@ -16,6 +19,8 @@ public class GridActor : MonoBehaviour
     {
         if (_manager == null)
             _manager = GetComponentInParent<GridManager>();
+        if (_manager == null)
+            _manager = FindObjectOfType<GridManager>();
 
         if (_manager == null)
         {

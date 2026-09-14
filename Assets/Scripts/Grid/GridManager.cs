@@ -58,6 +58,13 @@ public class GridManager : MonoBehaviour
         && !_occupants.ContainsKey(cell)
         && IsPassable(cell);
 
+    /// <summary>地板上且非 Blocked。视线穿过时忽略单位占用。</summary>
+    public bool IsPassable(Vector2Int cell)
+    {
+        if (!_floor.Contains(cell)) return false;
+        return !_links.TryGetValue(cell, out MovementLinks links) || links != MovementLinks.None;
+    }
+
     public bool AllowsStep(Vector2Int from, Vector2Int to)
     {
         Vector2Int delta = to - from;
@@ -94,11 +101,6 @@ public class GridManager : MonoBehaviour
     {
         if (_occupants.TryGetValue(actor.Cell, out GridActor current) && current == actor)
             _occupants.Remove(actor.Cell);
-    }
-
-    private bool IsPassable(Vector2Int cell)
-    {
-        return !_links.TryGetValue(cell, out MovementLinks links) || links != MovementLinks.None;
     }
 
     private bool AllowsLeave(Vector2Int cell, Dir dir)
