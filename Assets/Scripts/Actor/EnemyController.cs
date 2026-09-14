@@ -4,10 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyRenderer))]
 public class EnemyController : ActorController
 {
-    [SerializeField] private int _detectRange = 6;
+    [SerializeField] private int _detectRange = 2;
     [SerializeField] private bool _requireLineOfSight = true;
 
     private TurnManager _turnManager;
+
+    private bool _isSpottedPlayer = false;
 
     private void OnEnable()
     {
@@ -26,12 +28,16 @@ public class EnemyController : ActorController
         GridManager world = Actor.Manager;
         if (world == null) return;
 
-        if (SeesPlayer(player.Cell))
+        // SeesPlayer 只负责更新 _isSpottedPlayer（看见过一次就一直记着）。
+        SeesPlayer(player.Cell);
+
+        if (_isSpottedPlayer)
             Chase(player, world);
         else
             Patrol(world);
     }
 
+    // 发现player后进行追踪的逻辑
     private void Chase(GridActor player, GridManager world)
     {
         Vector2Int from = Actor.Cell;
@@ -65,47 +71,59 @@ public class EnemyController : ActorController
             TryWalk(bestDir.Value);
     }
 
+    // 巡逻，逻辑是：朝LastDir一直走，撞墙或者被挡换成LastDir的反方向
     private void Patrol(GridManager world)
     {
-        Vector2Int from = Actor.Cell;
-        List<Dir> options = new List<Dir>(4);
-        for (int i = 0; i < 4; i++)
-        {
-            Dir dir = (Dir)i;
-            Vector2Int dest = from + dir.ToDelta();
-            if (world.CanWalk(dest))
-                options.Add(dir);
-        }
+        // 一直朝当前朝向直走，撞墙或被挡就掉头。
+        if (!world.CanWalk(Actor.Cell + LastDir.ToDelta()))
+            LastDir = LastDir.Opposite();
 
-        if (options.Count == 0) return;
-        TryWalk(options[Random.Range(0, options.Count)]);
+        TryWalk(LastDir);
     }
 
-    private bool SeesPlayer(Vector2Int playerCell)
+    private void SeesPlayer(Vector2Int playerCell)
     {
-        Vector2Int from = Actor.Cell;
-        int dist = Manhattan(from, playerCell);
-        if (dist > _detectRange) return false;
-        if (dist == 0) return true;
-        if (!_requireLineOfSight) return true;
-        if (from.x != playerCell.x && from.y != playerCell.y) return false;
+        Vector2Int enemyCell = Actor.Cell;
 
-        Vector2Int delta = playerCell - from;
-        delta.x = (int)Mathf.Sign(delta.x);
-        delta.y = (int)Mathf.Sign(delta.y);
-        if (!DirExtensions.TryFromDelta(delta, out Dir along)) return false;
+        Vector2Int delta = playerCell - enemyCell;
+        // 如果敌人和玩家即不在同一行也不在同一列，则看不到玩家，直接返回false
+        if (delta.x != 0 && delta.y != 0) return;
 
-        GridManager world = Actor.Manager;
-        Vector2Int p = from + along.ToDelta();
-        while (p != playerCell)
+        switch (LastDir)
         {
-            if (!world.IsPassable(p)) return false;
-            p += along.ToDelta();
+            case Dir.N:
+                if (delta.x > 0 && Mathf.Abs(delta.x) <= 2) 
+                {
+                    Debug.Log("See u~");
+                    _isSpottedPlayer = true;
+                }
+                break;
+            case Dir.S:
+                if (delta.x < 0 && Mathf.Abs(delta.x) <= 2)
+                {
+                    Debug.Log("See u~");
+                    _isSpottedPlayer = true;
+                }
+                break;
+            case Dir.W:
+                if (delta.y > 0 && Mathf.Abs(delta.y) <= 2)
+                {
+                    Debug.Log("See u~");
+                    _isSpottedPlayer = true;
+                }
+                break;
+            case Dir.E:
+                if (delta.y < 0 && Mathf.Abs(delta.y) <= 2)
+                {
+                    Debug.Log("See u~");
+                    _isSpottedPlayer = true;
+                }
+                break;
         }
 
-        return true;
+        return;
     }
 
-    private static int Manhattan(Vector2Int a, Vector2Int b) =>
+    private int Manhattan(Vector2Int a, Vector2Int b) =>
         Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
 }
