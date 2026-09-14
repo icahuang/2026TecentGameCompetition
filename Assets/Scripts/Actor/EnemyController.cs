@@ -6,6 +6,7 @@ public class EnemyController : ActorController
 {
     [SerializeField] private int _detectRange = 2;
     [SerializeField] private bool _requireLineOfSight = true;
+    [SerializeField] private Dir _initDir = Dir.N;
 
     private TurnManager _turnManager;
 
@@ -20,6 +21,14 @@ public class EnemyController : ActorController
     private void OnDisable()
     {
         if (_turnManager != null) _turnManager.Unregister(this);
+    }
+
+    private void Start()
+    {
+        LastDir = _initDir;
+        AnimationType animation = new AnimationType();
+        animation.SetAnimationType(Act.idle, LastDir);
+        Renderer.Play(animation);
     }
 
     public void TakeTurn(GridActor player)
