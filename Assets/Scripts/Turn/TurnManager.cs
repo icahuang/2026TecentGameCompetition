@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class TurnManager : MonoBehaviour
 {
     [SerializeField] private Button _resetButton;
+    [SerializeField] private float _stepDuration = 0.25f;
 
     private readonly List<EnemyController> _enemies = new List<EnemyController>();
     private bool _caught;
@@ -26,6 +27,9 @@ public class TurnManager : MonoBehaviour
             return _instance;
         }
     }
+
+    /// <summary>走一格用几秒。所有角色统一读这一个值，别在 prefab 上各存一份。</summary>
+    public float StepDuration => _stepDuration;
 
     private void Awake()
     {
