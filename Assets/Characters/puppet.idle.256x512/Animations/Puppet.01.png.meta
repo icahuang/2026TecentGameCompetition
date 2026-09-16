@@ -100,12 +100,12 @@ TextureImporter:
       name: Puppet.01_0
       rect:
         serializedVersion: 2
-        x: 371
-        y: 911
+        x: 260
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,12 +121,12 @@ TextureImporter:
       name: Puppet.01_2
       rect:
         serializedVersion: 2
-        x: 1139
-        y: 909
+        x: 772
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,12 +142,12 @@ TextureImporter:
       name: Puppet.01_3
       rect:
         serializedVersion: 2
-        x: 1395
-        y: 911
+        x: 1028
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,12 +163,12 @@ TextureImporter:
       name: Puppet.01_4
       rect:
         serializedVersion: 2
-        x: 1651
-        y: 911
+        x: 1284
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: Puppet.01_5
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 911
+        x: 1540
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,12 +205,12 @@ TextureImporter:
       name: Puppet.01_6
       rect:
         serializedVersion: 2
-        x: 371
-        y: 655
+        x: 1796
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -226,12 +226,12 @@ TextureImporter:
       name: Puppet.01_7
       rect:
         serializedVersion: 2
-        x: 1139
-        y: 655
+        x: 2052
+        y: 914
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -247,12 +247,12 @@ TextureImporter:
       name: Puppet.01_8
       rect:
         serializedVersion: 2
-        x: 1395
-        y: 655
+        x: 260
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -268,12 +268,12 @@ TextureImporter:
       name: Puppet.01_9
       rect:
         serializedVersion: 2
-        x: 1651
-        y: 655
+        x: 772
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -289,12 +289,12 @@ TextureImporter:
       name: Puppet.01_10
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 655
+        x: 1028
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -310,12 +310,12 @@ TextureImporter:
       name: Puppet.01_11
       rect:
         serializedVersion: 2
-        x: 371
-        y: 399
+        x: 1284
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -331,12 +331,12 @@ TextureImporter:
       name: Puppet.01_12
       rect:
         serializedVersion: 2
-        x: 1139
-        y: 399
+        x: 1540
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -352,12 +352,12 @@ TextureImporter:
       name: Puppet.01_13
       rect:
         serializedVersion: 2
-        x: 1395
-        y: 399
+        x: 1796
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -373,12 +373,12 @@ TextureImporter:
       name: Puppet.01_14
       rect:
         serializedVersion: 2
-        x: 1651
-        y: 399
+        x: 2052
+        y: 658
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -394,12 +394,12 @@ TextureImporter:
       name: Puppet.01_15
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 399
+        x: 260
+        y: 402
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -415,12 +415,12 @@ TextureImporter:
       name: Puppet.01_16
       rect:
         serializedVersion: 2
-        x: 371
-        y: 143
+        x: 772
+        y: 402
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -436,12 +436,12 @@ TextureImporter:
       name: Puppet.01_17
       rect:
         serializedVersion: 2
-        x: 1139
-        y: 143
+        x: 1028
+        y: 402
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -457,12 +457,12 @@ TextureImporter:
       name: Puppet.01_18
       rect:
         serializedVersion: 2
-        x: 1395
-        y: 143
+        x: 1284
+        y: 404
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -478,12 +478,12 @@ TextureImporter:
       name: Puppet.01_19
       rect:
         serializedVersion: 2
-        x: 1651
-        y: 143
+        x: 1540
+        y: 402
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -499,12 +499,12 @@ TextureImporter:
       name: Puppet.01_20
       rect:
         serializedVersion: 2
-        x: 1907
-        y: 143
+        x: 1796
+        y: 402
         width: 256
         height: 256
       alignment: 9
-      pivot: {x: 0.5, y: 0.166}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -512,6 +512,174 @@ TextureImporter:
       bones: []
       spriteID: 76ee4cf8116efb24e893efada9a82b6c
       internalID: -1385687642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_21
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 402
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e55b862b2e8d5bb41b5aea78d2ba25a2
+      internalID: -11078772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_22
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 625f178f00fdfeb42aad411d3a56c540
+      internalID: 240992135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_23
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0df886d706361a439ef2e541c463ff2
+      internalID: -948649059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_24
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca13797c13d01174299320ac791ba32a
+      internalID: 116215272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_25
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 450c8e0532e379346926dcf7b4f6e1d1
+      internalID: -1886464638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_26
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ed2a3af942d74340bfda788d13ab8c2
+      internalID: -942262225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_27
+      rect:
+        serializedVersion: 2
+        x: 1796
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7adf6d1cc3b8a04796093af81471dd2
+      internalID: 974498008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puppet.01_28
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 146
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d8eaa08a198f84f9cdbb78725c2517
+      internalID: 49344439
       vertices: []
       indices: 
       edges: []
@@ -541,6 +709,14 @@ TextureImporter:
       Puppet.01_19: -2100070988
       Puppet.01_2: -1249032038
       Puppet.01_20: -1385687642
+      Puppet.01_21: -11078772
+      Puppet.01_22: 240992135
+      Puppet.01_23: -948649059
+      Puppet.01_24: 116215272
+      Puppet.01_25: -1886464638
+      Puppet.01_26: -942262225
+      Puppet.01_27: 974498008
+      Puppet.01_28: 49344439
       Puppet.01_3: 371082276
       Puppet.01_4: -523390558
       Puppet.01_5: -299762341
